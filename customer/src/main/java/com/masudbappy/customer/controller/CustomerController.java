@@ -1,12 +1,13 @@
 package com.masudbappy.customer.controller;
 
+import com.masudbappy.customer.model.Customer;
 import com.masudbappy.customer.record.CustomerRegistrationRequest;
 import com.masudbappy.customer.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * The type Customer controller.
@@ -25,5 +26,12 @@ public record CustomerController(CustomerService customerService) {
     public void registerCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest){
         log.info("New customer registration {} ", customerRegistrationRequest);
         customerService.registerCustomer(customerRegistrationRequest);
+    }
+
+    @GetMapping("/getCustomers")
+    public ResponseEntity<List<Customer>> getCustomers(){
+        log.info("Get All the registered customers {} ");
+        List<Customer> customers = customerService.getCustomers();
+        return ResponseEntity.ok(customers);
     }
 }
