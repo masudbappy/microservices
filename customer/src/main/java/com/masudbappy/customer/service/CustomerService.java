@@ -23,7 +23,8 @@ public class CustomerService {
                 .email(request.email()).build();
         customerRepository.saveAndFlush(customer);
         FraudCheckResponse fraudCheckResponsec = restTemplate.getForObject(
-                "http://localhost:18081/api/v1/fraud-check/{customerId}",
+//                "http://localhost:18081/api/v1/fraud-check/{customerId}", this is for without register with eureka
+                "http://FRAUD/api/v1/fraud-check/{customerId}",
                 FraudCheckResponse.class,
                 customer.getId()
         );
