@@ -1,6 +1,6 @@
 package com.masudbappy.controller;
 
-import com.masudbappy.model.FraudCheckResponse;
+import com.masudbappy.clients.fraud.record.FraudCheckResponse;
 import com.masudbappy.service.FraudCheckService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

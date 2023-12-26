@@ -1,8 +1,9 @@
 package com.masudbappy.customer.service;
 
+import com.masudbappy.clients.fraud.FraudClient;
+import com.masudbappy.clients.fraud.record.FraudCheckResponse;
 import com.masudbappy.customer.model.Customer;
 import com.masudbappy.customer.record.CustomerRegistrationRequest;
-import com.masudbappy.customer.record.FraudCheckResponse;
 import com.masudbappy.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,21 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .email(request.email()).build();
         customerRepository.saveAndFlush(customer);
-        FraudCheckResponse fraudCheckResponsec = restTemplate.getForObject(
+        /*FraudCheckResponse fraudCheckResponsec = restTemplate.getForObject(
 //                "http://localhost:18081/api/v1/fraud-check/{customerId}", this is for without register with eureka
                 "http://FRAUD/api/v1/fraud-check/{customerId}",
                 FraudCheckResponse.class,
                 customer.getId()
-        );
-        if (fraudCheckResponsec.isFraudster()){
+        );*/
+        FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
+        if (fraudCheckResponse.isFraudster()){
             throw new IllegalStateException("Fraudster");
         }
 
