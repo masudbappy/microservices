@@ -1,6 +1,6 @@
 package com.masudbappy.notifications.service;
 
-import com.masudbappy.clients.fraud.record.NotificationRequest;
+import com.masudbappy.clients.notification.record.NotificationRequest;
 import com.masudbappy.notifications.model.Notification;
 import com.masudbappy.notifications.repository.NotificationRepository;
 import lombok.AllArgsConstructor;

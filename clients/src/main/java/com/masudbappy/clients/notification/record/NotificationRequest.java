@@ -1,4 +1,4 @@
-package com.masudbappy.clients.fraud.record;
+package com.masudbappy.clients.notification.record;
 
 public record NotificationRequest(
         Integer toCustomerId,

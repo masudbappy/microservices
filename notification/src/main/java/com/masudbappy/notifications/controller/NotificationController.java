@@ -1,6 +1,6 @@
 package com.masudbappy.notifications.controller;
 
-import com.masudbappy.clients.fraud.record.NotificationRequest;
+import com.masudbappy.clients.notification.record.NotificationRequest;
 import com.masudbappy.notifications.service.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
