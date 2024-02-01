@@ -3,6 +3,9 @@ package com.masudbappy.redis.controller;
 import com.masudbappy.redis.entity.Product;
 import com.masudbappy.redis.repository.dao.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/product")
+@EnableCaching
 public class ProductController {
     private ProductDao dao;
 
@@ -54,6 +58,7 @@ public class ProductController {
      * @return the product
      */
     @GetMapping("/{id}")
+    @Cacheable(key = "#id", value = "Product", unless = "#result.price>5000")
     public Product findProduct(@PathVariable int id) {
         return dao.findProductById(id);
     }
@@ -65,6 +70,7 @@ public class ProductController {
      * @return the string
      */
     @DeleteMapping("/{id}")
+    @CacheEvict(key = "#id", value = "Product")
     public String remove(@PathVariable int id) {
         return dao.deleteProduct(id);
     }
